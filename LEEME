@@ -1,0 +1,120 @@
+Prácticas de SIA - Curso 2003-2004
+----------------------------------
+Fernando Blat Peris
+<ferblape@inf.upv.es>
+
+- Las prácticas están desarrolladas en Linux y sólo podrán compilarse en Linux, utilizando la orden make. Ésta generará un binario llamado raytracer.
+
+- El comando raytracer toma 3 argumentos:
+ 	> -h alto: indica el alto de la ventana (por defecto 320)
+  	> -w ancho: indica el ancho de la ventana (por defecto 320)
+   	> -f fichero: indica el fichero escenico del que se leerá la escena
+  Por ejemplo: $ raytracer -h 640 -w 640 -f escenas/basica_focal.scn
+
+- El raytracer lee las escenas a partir de ficheros .scn, que describen una escena con un lenguaje de modelado inventado como ampliación de las prácticas.
+  Se ha desarrollado un parser utlizando Flex y Bison para realizar el análisis léxico y sintáctico respectivamente. Al final de este fichero se incluye
+  la gramática que soporta el lenguaje.
+
+- Se han desarrollado TODAS las prácticas de la asignatura, obteniendo como resultado final el programa raytracer, el cuál incorpora:
+    > primitivas simples: esfera, triángulo, cuadrado, cubo y plano (sólo sobre las Y). Además, al plano se le puede dar una textura de ajedrez, determinada
+	  por dos colores y el ancho de la casilla.
+	> renderizado en modelo alámbrico (pulsando la tecla 'o' durante la ejecución).
+	> renderizado como raytracer (por defecto y pulsando la tecla 'r').
+	> luces: ambiental, puntual, focal y direccional. Como ejemplo se han incluído en el directorio escenas 3 escenas basica_tipoluz.scn donde tipoluz es
+	puntual, focal y focal2 (para ver la variación del parámetro del foco) y direccional. Todas estas escenas incluyen una luz ambiental.
+	> renderizado de sombras.
+	> efecto de reflexión.
+	> control de la profundidad del árbol limitándolo a 3 niveles y a una contribución mayor al 10%.
+	
+- Las escenas que se han incluído son las ya citadas que muestran los tipos de luces además de una escena llamada cubo.scn que muestra un cubo junto a 
+  otras primitivas.
+
+- Por si hay problemas con la compilación se ha incluído un binario ya compilado en el directorio bin/
+
+- El lenguaje escénico tiene la siguiente sintaxis:
+  
+   > Definición de una cámara:
+     Camera {
+	   Location <X,Y,Z>
+	   Look_at <X,Y,Z>
+	   Fov ALFA
+	  }
+	  , donde X, Y, Z y ALFA son flotantes, además, ALFA está en grados. 
+	  Location es el punto donde está situada la cámara.
+	  Look_at es el punto donde mira la cámara (no la dirección).
+	  Fov es el ángulo de apertura vertical de la cámara.
+
+   > Definición de luces:
+   	 Ambiental { Color <R,G,B> }, donde R, G, B son flotantes entre 0 y 1.
+	 Puntual {
+	 	<X,Y,Z>
+		Color <R,G,B>
+	 }, donde X, Y y Z son flotantes que indican el centro de la luz y R, G, B son flotantes entre 0 y 1 que indican la intensidad de la luz.
+	 Direccional {
+	 	<X,Y,Z>
+		Color <R,G,B>
+	 }, donde X, Y y Z son flotantes que indican la direccion de la luz y R, G, B son flotantes entre 0 y 1 que indican la intensidad de la luz.
+	 Focal {
+	    <X,Y,Z>
+		<X,Y,Z>
+		Factor FLOAT
+		Color <R,G,B>
+	}, donde el primer vector de X, Y, Z son flotantes que indican el centro de la luz, el segundo vector es del mismo tipo e indica la dirección,
+	el tercer elemento es el parámetro de la luz y el cuarto vector R, G, B son flotantes entre 0 y 1 que indican la intensidad.
+
+   > Definición de primitivas:
+     Sphere {
+	 	<X,Y,Z>, RADIO
+		Color <R,G,B>
+		Specular Ks
+		Diffuse Kd
+	 }, donde X,Y,Z son flotantes que indican el centro de la esfera, RADIO es un flotante que indica el radio, R, G, B son flotantes entre 0 y 1 que 
+	 indican el color y Ks y Kd son flotantes entre 0 y 1 que indican las constantes de reflexión especular y difusa respectivamente.
+	 Triangle {
+	   	<X,Y,Z>
+	  	<X,Y,Z>
+	   	<X,Y,Z>
+	  	Color <R,G,B>
+	  	Specular Ks
+	  	Diffuse Kd
+	 }, donde los tres vectores de <X,Y,Z> son los tres vértices del triángulo dados en sentido antihorario. El resto de parámetros son idénticos a 
+	 los de la esfera.
+	 Quadrilateral {
+	   	<X,Y,Z>
+	  	<X,Y,Z>
+	  	<X,Y,Z>
+	   	<X,Y,Z>
+	  	Color <R,G,B>
+	  	Specular Ks
+	  	Diffuse Kd
+	 }, donde los cuatro vectores de <X,Y,Z> son los cuatro vértices del cuadrilátero dados en sentido antihorario. El resto de parámetros son idénticos a 
+	 los de la esfera.
+	 Plane {
+	    Y
+		Color <R,G,B>
+	  	Specular Ks
+	  	Diffuse Kd
+	 }
+	 Plane {
+	    Y
+		Checker {
+			Color <R,G,B>
+			Specular Ks
+	  		Diffuse Kd
+			Color <R,G,B>
+	  		Specular Ks
+	  		Diffuse Kd
+			Size FLOAT
+		}
+	}, donde la Y es un flotante que indica la altura del plano. Éste se puede definir con un color sólido o con una textura de ajedrez, en la cuál se indican 
+	dos colores y el ancho de cada casilla.
+
+	
+	
+
+
+
+
+
+
+	 

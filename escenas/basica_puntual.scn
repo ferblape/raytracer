@@ -1,0 +1,72 @@
+Camera {
+	Location <-0.5,0.9,2.0>
+	Look_at <0.0,0.0,0.0>
+	Fov 45
+}
+
+Puntual {
+	<0,2,3>
+	Color <0.8,0.8,0.8>
+}
+
+Ambiental {	color <0.2,0.2,0.2> }
+
+
+Sphere {
+	<-0.5,0.1,0.9>,0.1
+	color <0,1,0>
+	especular 0.9
+	diffuse 0.2
+
+}
+
+Sphere {
+	<0.2,0.2,0>,0.2
+	color <0.6,0.6,1>
+	especular 0.1
+	diffuse 0.5
+}
+
+Sphere {
+	<-0.2,0.5,-2>,0.5
+	color<1,1,0>
+}
+
+
+Plane {
+	0
+	checker {
+		color <1,0.3,0.3>
+		color <0.8,0.8,0.8>
+		size 0.3
+	}
+}
+
+Triangle {
+	<-0.3,0.05,0.5>
+	<0.1,0,1>
+	<0.2,0.2,1.2>
+	color <1,0,1>
+	especular 0.8
+	diffuse 0.5
+}
+
+"------------ Espejo -----------"
+Quadrilateral {
+   <0.8,1.8,0.8>
+   <0.4,1.8,-1.5>
+   <0.4,0.05,-1.5>
+   <0.8,0.05,0.8>
+   color <0,0,0>
+   especular 0.8
+   diffuse 0.5
+}
+Quadrilateral {
+   <0.81,1.81,0.81>
+   <0.41,1.81,-1.51>
+   <0.41,0.04,-1.51>
+   <0.81,0.04,0.81>
+   color <0.6,0.6,1>
+   especular 0.2
+   diffuse 0.5
+}

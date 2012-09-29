@@ -1,0 +1,1299 @@
+Terminals which are not used
+
+   ID_
+   PUNTOCOMA_
+   COMILLAS_
+   CADENA_
+
+
+Grammar
+
+    0 $accept: escena $end
+
+    1 @1: /* empty */
+
+    2 escena: @1 camara_ luces objetos
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ coordenadas FOV_ FLOAT_ CIERRALLAVE_
+
+    4 coordenadas: MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    7 objetos: /* empty */
+    8        | objeto otro_objeto
+
+    9 objeto: esfera
+   10       | plano
+   11       | cubo
+   12       | triangulo
+   13       | cuadrado
+
+   14 otro_objeto: /* empty */
+   15            | esfera otro_objeto
+   16            | plano otro_objeto
+   17            | cubo otro_objeto
+   18            | triangulo otro_objeto
+   19            | cuadrado otro_objeto
+
+   20 esfera: SPHERE_ ABRELLAVE_ coordenadas COMA_ FLOAT_ color CIERRALLAVE_
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+   23 checker: CHECKER_ ABRELLAVE_ color color SIZE_ FLOAT_ CIERRALLAVE_
+
+   24 plano: PLANE_ ABRELLAVE_ FLOAT_ color CIERRALLAVE_
+   25      | PLANE_ ABRELLAVE_ FLOAT_ checker CIERRALLAVE_
+
+   26 cubo: CUBE_ ABRELLAVE_ coordenadas coordenadas color CIERRALLAVE_
+
+   27 luces: /* empty */
+   28      | luz otra_luz
+
+   29 luz: ambiental
+   30    | puntual
+   31    | direccional
+   32    | focal
+
+   33 otra_luz: /* empty */
+   34         | ambiental otra_luz
+   35         | puntual otra_luz
+   36         | direccional otra_luz
+   37         | focal otra_luz
+
+   38 ambiental: AMBIENTAL_ ABRELLAVE_ color CIERRALLAVE_
+
+   39 puntual: PUNTUAL_ ABRELLAVE_ coordenadas color CIERRALLAVE_
+
+   40 direccional: DIRECCIONAL_ ABRELLAVE_ coordenadas color CIERRALLAVE_
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas coordenadas FACTOR_ FLOAT_ color CIERRALLAVE_
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ID_ (258)
+ABRELLAVE_ (259) 3 20 21 22 23 24 25 26 38 39 40 41
+CIERRALLAVE_ (260) 3 20 21 22 23 24 25 26 38 39 40 41
+MENOR_ (261) 4 5 6
+FACTOR_ (262) 41
+MAYOR_ (263) 4 5 6
+COMA_ (264) 4 5 6 20
+FLOAT_ (265) 3 4 5 6 20 23 24 25 41
+PUNTOCOMA_ (266)
+COMILLAS_ (267)
+CADENA_ (268)
+LOCATION_ (269) 3
+LOOKAT_ (270) 3
+CAMERA_ (271) 3
+AMBIENTAL_ (272) 38
+COLOR_ (273) 5 6
+PUNTUAL_ (274) 39
+DIRECCIONAL_ (275) 40
+FOCAL_ (276) 41
+SPHERE_ (277) 20
+PLANE_ (278) 24 25
+CHECKER_ (279) 23
+SIZE_ (280) 23
+CUBE_ (281) 26
+QUADRILATERAL_ (282) 22
+TRIANGLE_ (283) 21
+ESPECULAR_ (284) 5
+DIFFUSE_ (285) 5
+FOV_ (286) 3
+
+
+Nonterminals, with rules where they appear
+
+$accept (32)
+    on left: 0
+escena (33)
+    on left: 2, on right: 0
+@1 (34)
+    on left: 1, on right: 2
+camara_ (35)
+    on left: 3, on right: 2
+coordenadas (36)
+    on left: 4, on right: 3 20 21 22 26 39 40 41
+color (37)
+    on left: 5 6, on right: 20 21 22 23 24 26 38 39 40 41
+objetos (38)
+    on left: 7 8, on right: 2
+objeto (39)
+    on left: 9 10 11 12 13, on right: 8
+otro_objeto (40)
+    on left: 14 15 16 17 18 19, on right: 8 15 16 17 18 19
+esfera (41)
+    on left: 20, on right: 9 15
+triangulo (42)
+    on left: 21, on right: 12 18
+cuadrado (43)
+    on left: 22, on right: 13 19
+checker (44)
+    on left: 23, on right: 25
+plano (45)
+    on left: 24 25, on right: 10 16
+cubo (46)
+    on left: 26, on right: 11 17
+luces (47)
+    on left: 27 28, on right: 2
+luz (48)
+    on left: 29 30 31 32, on right: 28
+otra_luz (49)
+    on left: 33 34 35 36 37, on right: 28 34 35 36 37
+ambiental (50)
+    on left: 38, on right: 29 34
+puntual (51)
+    on left: 39, on right: 30 35
+direccional (52)
+    on left: 40, on right: 31 36
+focal (53)
+    on left: 41, on right: 32 37
+
+
+state 0
+
+    0 $accept: . escena $end
+
+    $default  reduce using rule 1 (@1)
+
+    escena  go to state 1
+    @1      go to state 2
+
+
+state 1
+
+    0 $accept: escena . $end
+
+    $end  shift, and go to state 3
+
+
+state 2
+
+    2 escena: @1 . camara_ luces objetos
+
+    CAMERA_  shift, and go to state 4
+
+    camara_  go to state 5
+
+
+state 3
+
+    0 $accept: escena $end .
+
+    $default  accept
+
+
+state 4
+
+    3 camara_: CAMERA_ . ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ coordenadas FOV_ FLOAT_ CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 6
+
+
+state 5
+
+    2 escena: @1 camara_ . luces objetos
+
+    AMBIENTAL_    shift, and go to state 7
+    PUNTUAL_      shift, and go to state 8
+    DIRECCIONAL_  shift, and go to state 9
+    FOCAL_        shift, and go to state 10
+
+    $default  reduce using rule 27 (luces)
+
+    luces        go to state 11
+    luz          go to state 12
+    ambiental    go to state 13
+    puntual      go to state 14
+    direccional  go to state 15
+    focal        go to state 16
+
+
+state 6
+
+    3 camara_: CAMERA_ ABRELLAVE_ . LOCATION_ coordenadas LOOKAT_ coordenadas FOV_ FLOAT_ CIERRALLAVE_
+
+    LOCATION_  shift, and go to state 17
+
+
+state 7
+
+   38 ambiental: AMBIENTAL_ . ABRELLAVE_ color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 18
+
+
+state 8
+
+   39 puntual: PUNTUAL_ . ABRELLAVE_ coordenadas color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 19
+
+
+state 9
+
+   40 direccional: DIRECCIONAL_ . ABRELLAVE_ coordenadas color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 20
+
+
+state 10
+
+   41 focal: FOCAL_ . ABRELLAVE_ coordenadas coordenadas FACTOR_ FLOAT_ color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 21
+
+
+state 11
+
+    2 escena: @1 camara_ luces . objetos
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 7 (objetos)
+
+    objetos    go to state 27
+    objeto     go to state 28
+    esfera     go to state 29
+    triangulo  go to state 30
+    cuadrado   go to state 31
+    plano      go to state 32
+    cubo       go to state 33
+
+
+state 12
+
+   28 luces: luz . otra_luz
+
+    AMBIENTAL_    shift, and go to state 7
+    PUNTUAL_      shift, and go to state 8
+    DIRECCIONAL_  shift, and go to state 9
+    FOCAL_        shift, and go to state 10
+
+    $default  reduce using rule 33 (otra_luz)
+
+    otra_luz     go to state 34
+    ambiental    go to state 35
+    puntual      go to state 36
+    direccional  go to state 37
+    focal        go to state 38
+
+
+state 13
+
+   29 luz: ambiental .
+
+    $default  reduce using rule 29 (luz)
+
+
+state 14
+
+   30 luz: puntual .
+
+    $default  reduce using rule 30 (luz)
+
+
+state 15
+
+   31 luz: direccional .
+
+    $default  reduce using rule 31 (luz)
+
+
+state 16
+
+   32 luz: focal .
+
+    $default  reduce using rule 32 (luz)
+
+
+state 17
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ . coordenadas LOOKAT_ coordenadas FOV_ FLOAT_ CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 40
+
+
+state 18
+
+   38 ambiental: AMBIENTAL_ ABRELLAVE_ . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 42
+
+
+state 19
+
+   39 puntual: PUNTUAL_ ABRELLAVE_ . coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 43
+
+
+state 20
+
+   40 direccional: DIRECCIONAL_ ABRELLAVE_ . coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 44
+
+
+state 21
+
+   41 focal: FOCAL_ ABRELLAVE_ . coordenadas coordenadas FACTOR_ FLOAT_ color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 45
+
+
+state 22
+
+   20 esfera: SPHERE_ . ABRELLAVE_ coordenadas COMA_ FLOAT_ color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 46
+
+
+state 23
+
+   24 plano: PLANE_ . ABRELLAVE_ FLOAT_ color CIERRALLAVE_
+   25      | PLANE_ . ABRELLAVE_ FLOAT_ checker CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 47
+
+
+state 24
+
+   26 cubo: CUBE_ . ABRELLAVE_ coordenadas coordenadas color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 48
+
+
+state 25
+
+   22 cuadrado: QUADRILATERAL_ . ABRELLAVE_ coordenadas coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 49
+
+
+state 26
+
+   21 triangulo: TRIANGLE_ . ABRELLAVE_ coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 50
+
+
+state 27
+
+    2 escena: @1 camara_ luces objetos .
+
+    $default  reduce using rule 2 (escena)
+
+
+state 28
+
+    8 objetos: objeto . otro_objeto
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 14 (otro_objeto)
+
+    otro_objeto  go to state 51
+    esfera       go to state 52
+    triangulo    go to state 53
+    cuadrado     go to state 54
+    plano        go to state 55
+    cubo         go to state 56
+
+
+state 29
+
+    9 objeto: esfera .
+
+    $default  reduce using rule 9 (objeto)
+
+
+state 30
+
+   12 objeto: triangulo .
+
+    $default  reduce using rule 12 (objeto)
+
+
+state 31
+
+   13 objeto: cuadrado .
+
+    $default  reduce using rule 13 (objeto)
+
+
+state 32
+
+   10 objeto: plano .
+
+    $default  reduce using rule 10 (objeto)
+
+
+state 33
+
+   11 objeto: cubo .
+
+    $default  reduce using rule 11 (objeto)
+
+
+state 34
+
+   28 luces: luz otra_luz .
+
+    $default  reduce using rule 28 (luces)
+
+
+state 35
+
+   34 otra_luz: ambiental . otra_luz
+
+    AMBIENTAL_    shift, and go to state 7
+    PUNTUAL_      shift, and go to state 8
+    DIRECCIONAL_  shift, and go to state 9
+    FOCAL_        shift, and go to state 10
+
+    $default  reduce using rule 33 (otra_luz)
+
+    otra_luz     go to state 57
+    ambiental    go to state 35
+    puntual      go to state 36
+    direccional  go to state 37
+    focal        go to state 38
+
+
+state 36
+
+   35 otra_luz: puntual . otra_luz
+
+    AMBIENTAL_    shift, and go to state 7
+    PUNTUAL_      shift, and go to state 8
+    DIRECCIONAL_  shift, and go to state 9
+    FOCAL_        shift, and go to state 10
+
+    $default  reduce using rule 33 (otra_luz)
+
+    otra_luz     go to state 58
+    ambiental    go to state 35
+    puntual      go to state 36
+    direccional  go to state 37
+    focal        go to state 38
+
+
+state 37
+
+   36 otra_luz: direccional . otra_luz
+
+    AMBIENTAL_    shift, and go to state 7
+    PUNTUAL_      shift, and go to state 8
+    DIRECCIONAL_  shift, and go to state 9
+    FOCAL_        shift, and go to state 10
+
+    $default  reduce using rule 33 (otra_luz)
+
+    otra_luz     go to state 59
+    ambiental    go to state 35
+    puntual      go to state 36
+    direccional  go to state 37
+    focal        go to state 38
+
+
+state 38
+
+   37 otra_luz: focal . otra_luz
+
+    AMBIENTAL_    shift, and go to state 7
+    PUNTUAL_      shift, and go to state 8
+    DIRECCIONAL_  shift, and go to state 9
+    FOCAL_        shift, and go to state 10
+
+    $default  reduce using rule 33 (otra_luz)
+
+    otra_luz     go to state 60
+    ambiental    go to state 35
+    puntual      go to state 36
+    direccional  go to state 37
+    focal        go to state 38
+
+
+state 39
+
+    4 coordenadas: MENOR_ . FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    FLOAT_  shift, and go to state 61
+
+
+state 40
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas . LOOKAT_ coordenadas FOV_ FLOAT_ CIERRALLAVE_
+
+    LOOKAT_  shift, and go to state 62
+
+
+state 41
+
+    5 color: COLOR_ . MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ . MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    MENOR_  shift, and go to state 63
+
+
+state 42
+
+   38 ambiental: AMBIENTAL_ ABRELLAVE_ color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 64
+
+
+state 43
+
+   39 puntual: PUNTUAL_ ABRELLAVE_ coordenadas . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 65
+
+
+state 44
+
+   40 direccional: DIRECCIONAL_ ABRELLAVE_ coordenadas . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 66
+
+
+state 45
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas . coordenadas FACTOR_ FLOAT_ color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 67
+
+
+state 46
+
+   20 esfera: SPHERE_ ABRELLAVE_ . coordenadas COMA_ FLOAT_ color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 68
+
+
+state 47
+
+   24 plano: PLANE_ ABRELLAVE_ . FLOAT_ color CIERRALLAVE_
+   25      | PLANE_ ABRELLAVE_ . FLOAT_ checker CIERRALLAVE_
+
+    FLOAT_  shift, and go to state 69
+
+
+state 48
+
+   26 cubo: CUBE_ ABRELLAVE_ . coordenadas coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 70
+
+
+state 49
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ . coordenadas coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 71
+
+
+state 50
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ . coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 72
+
+
+state 51
+
+    8 objetos: objeto otro_objeto .
+
+    $default  reduce using rule 8 (objetos)
+
+
+state 52
+
+   15 otro_objeto: esfera . otro_objeto
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 14 (otro_objeto)
+
+    otro_objeto  go to state 73
+    esfera       go to state 52
+    triangulo    go to state 53
+    cuadrado     go to state 54
+    plano        go to state 55
+    cubo         go to state 56
+
+
+state 53
+
+   18 otro_objeto: triangulo . otro_objeto
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 14 (otro_objeto)
+
+    otro_objeto  go to state 74
+    esfera       go to state 52
+    triangulo    go to state 53
+    cuadrado     go to state 54
+    plano        go to state 55
+    cubo         go to state 56
+
+
+state 54
+
+   19 otro_objeto: cuadrado . otro_objeto
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 14 (otro_objeto)
+
+    otro_objeto  go to state 75
+    esfera       go to state 52
+    triangulo    go to state 53
+    cuadrado     go to state 54
+    plano        go to state 55
+    cubo         go to state 56
+
+
+state 55
+
+   16 otro_objeto: plano . otro_objeto
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 14 (otro_objeto)
+
+    otro_objeto  go to state 76
+    esfera       go to state 52
+    triangulo    go to state 53
+    cuadrado     go to state 54
+    plano        go to state 55
+    cubo         go to state 56
+
+
+state 56
+
+   17 otro_objeto: cubo . otro_objeto
+
+    SPHERE_         shift, and go to state 22
+    PLANE_          shift, and go to state 23
+    CUBE_           shift, and go to state 24
+    QUADRILATERAL_  shift, and go to state 25
+    TRIANGLE_       shift, and go to state 26
+
+    $default  reduce using rule 14 (otro_objeto)
+
+    otro_objeto  go to state 77
+    esfera       go to state 52
+    triangulo    go to state 53
+    cuadrado     go to state 54
+    plano        go to state 55
+    cubo         go to state 56
+
+
+state 57
+
+   34 otra_luz: ambiental otra_luz .
+
+    $default  reduce using rule 34 (otra_luz)
+
+
+state 58
+
+   35 otra_luz: puntual otra_luz .
+
+    $default  reduce using rule 35 (otra_luz)
+
+
+state 59
+
+   36 otra_luz: direccional otra_luz .
+
+    $default  reduce using rule 36 (otra_luz)
+
+
+state 60
+
+   37 otra_luz: focal otra_luz .
+
+    $default  reduce using rule 37 (otra_luz)
+
+
+state 61
+
+    4 coordenadas: MENOR_ FLOAT_ . COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    COMA_  shift, and go to state 78
+
+
+state 62
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ . coordenadas FOV_ FLOAT_ CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 79
+
+
+state 63
+
+    5 color: COLOR_ MENOR_ . FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ . FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    FLOAT_  shift, and go to state 80
+
+
+state 64
+
+   38 ambiental: AMBIENTAL_ ABRELLAVE_ color CIERRALLAVE_ .
+
+    $default  reduce using rule 38 (ambiental)
+
+
+state 65
+
+   39 puntual: PUNTUAL_ ABRELLAVE_ coordenadas color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 81
+
+
+state 66
+
+   40 direccional: DIRECCIONAL_ ABRELLAVE_ coordenadas color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 82
+
+
+state 67
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas coordenadas . FACTOR_ FLOAT_ color CIERRALLAVE_
+
+    FACTOR_  shift, and go to state 83
+
+
+state 68
+
+   20 esfera: SPHERE_ ABRELLAVE_ coordenadas . COMA_ FLOAT_ color CIERRALLAVE_
+
+    COMA_  shift, and go to state 84
+
+
+state 69
+
+   24 plano: PLANE_ ABRELLAVE_ FLOAT_ . color CIERRALLAVE_
+   25      | PLANE_ ABRELLAVE_ FLOAT_ . checker CIERRALLAVE_
+
+    COLOR_    shift, and go to state 41
+    CHECKER_  shift, and go to state 85
+
+    color    go to state 86
+    checker  go to state 87
+
+
+state 70
+
+   26 cubo: CUBE_ ABRELLAVE_ coordenadas . coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 88
+
+
+state 71
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas . coordenadas coordenadas coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 89
+
+
+state 72
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ coordenadas . coordenadas coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 90
+
+
+state 73
+
+   15 otro_objeto: esfera otro_objeto .
+
+    $default  reduce using rule 15 (otro_objeto)
+
+
+state 74
+
+   18 otro_objeto: triangulo otro_objeto .
+
+    $default  reduce using rule 18 (otro_objeto)
+
+
+state 75
+
+   19 otro_objeto: cuadrado otro_objeto .
+
+    $default  reduce using rule 19 (otro_objeto)
+
+
+state 76
+
+   16 otro_objeto: plano otro_objeto .
+
+    $default  reduce using rule 16 (otro_objeto)
+
+
+state 77
+
+   17 otro_objeto: cubo otro_objeto .
+
+    $default  reduce using rule 17 (otro_objeto)
+
+
+state 78
+
+    4 coordenadas: MENOR_ FLOAT_ COMA_ . FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    FLOAT_  shift, and go to state 91
+
+
+state 79
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ coordenadas . FOV_ FLOAT_ CIERRALLAVE_
+
+    FOV_  shift, and go to state 92
+
+
+state 80
+
+    5 color: COLOR_ MENOR_ FLOAT_ . COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ . COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    COMA_  shift, and go to state 93
+
+
+state 81
+
+   39 puntual: PUNTUAL_ ABRELLAVE_ coordenadas color CIERRALLAVE_ .
+
+    $default  reduce using rule 39 (puntual)
+
+
+state 82
+
+   40 direccional: DIRECCIONAL_ ABRELLAVE_ coordenadas color CIERRALLAVE_ .
+
+    $default  reduce using rule 40 (direccional)
+
+
+state 83
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas coordenadas FACTOR_ . FLOAT_ color CIERRALLAVE_
+
+    FLOAT_  shift, and go to state 94
+
+
+state 84
+
+   20 esfera: SPHERE_ ABRELLAVE_ coordenadas COMA_ . FLOAT_ color CIERRALLAVE_
+
+    FLOAT_  shift, and go to state 95
+
+
+state 85
+
+   23 checker: CHECKER_ . ABRELLAVE_ color color SIZE_ FLOAT_ CIERRALLAVE_
+
+    ABRELLAVE_  shift, and go to state 96
+
+
+state 86
+
+   24 plano: PLANE_ ABRELLAVE_ FLOAT_ color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 97
+
+
+state 87
+
+   25 plano: PLANE_ ABRELLAVE_ FLOAT_ checker . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 98
+
+
+state 88
+
+   26 cubo: CUBE_ ABRELLAVE_ coordenadas coordenadas . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 99
+
+
+state 89
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas coordenadas . coordenadas coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 100
+
+
+state 90
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ coordenadas coordenadas . coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 101
+
+
+state 91
+
+    4 coordenadas: MENOR_ FLOAT_ COMA_ FLOAT_ . COMA_ FLOAT_ MAYOR_
+
+    COMA_  shift, and go to state 102
+
+
+state 92
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ coordenadas FOV_ . FLOAT_ CIERRALLAVE_
+
+    FLOAT_  shift, and go to state 103
+
+
+state 93
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ . FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ COMA_ . FLOAT_ COMA_ FLOAT_ MAYOR_
+
+    FLOAT_  shift, and go to state 104
+
+
+state 94
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas coordenadas FACTOR_ FLOAT_ . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 105
+
+
+state 95
+
+   20 esfera: SPHERE_ ABRELLAVE_ coordenadas COMA_ FLOAT_ . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 106
+
+
+state 96
+
+   23 checker: CHECKER_ ABRELLAVE_ . color color SIZE_ FLOAT_ CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 107
+
+
+state 97
+
+   24 plano: PLANE_ ABRELLAVE_ FLOAT_ color CIERRALLAVE_ .
+
+    $default  reduce using rule 24 (plano)
+
+
+state 98
+
+   25 plano: PLANE_ ABRELLAVE_ FLOAT_ checker CIERRALLAVE_ .
+
+    $default  reduce using rule 25 (plano)
+
+
+state 99
+
+   26 cubo: CUBE_ ABRELLAVE_ coordenadas coordenadas color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 108
+
+
+state 100
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas coordenadas coordenadas . coordenadas color CIERRALLAVE_
+
+    MENOR_  shift, and go to state 39
+
+    coordenadas  go to state 109
+
+
+state 101
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ coordenadas coordenadas coordenadas . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 110
+
+
+state 102
+
+    4 coordenadas: MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ . FLOAT_ MAYOR_
+
+    FLOAT_  shift, and go to state 111
+
+
+state 103
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ coordenadas FOV_ FLOAT_ . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 112
+
+
+state 104
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ . COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ . COMA_ FLOAT_ MAYOR_
+
+    COMA_  shift, and go to state 113
+
+
+state 105
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas coordenadas FACTOR_ FLOAT_ color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 114
+
+
+state 106
+
+   20 esfera: SPHERE_ ABRELLAVE_ coordenadas COMA_ FLOAT_ color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 115
+
+
+state 107
+
+   23 checker: CHECKER_ ABRELLAVE_ color . color SIZE_ FLOAT_ CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 116
+
+
+state 108
+
+   26 cubo: CUBE_ ABRELLAVE_ coordenadas coordenadas color CIERRALLAVE_ .
+
+    $default  reduce using rule 26 (cubo)
+
+
+state 109
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas coordenadas coordenadas coordenadas . color CIERRALLAVE_
+
+    COLOR_  shift, and go to state 41
+
+    color  go to state 117
+
+
+state 110
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ coordenadas coordenadas coordenadas color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 118
+
+
+state 111
+
+    4 coordenadas: MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ . MAYOR_
+
+    MAYOR_  shift, and go to state 119
+
+
+state 112
+
+    3 camara_: CAMERA_ ABRELLAVE_ LOCATION_ coordenadas LOOKAT_ coordenadas FOV_ FLOAT_ CIERRALLAVE_ .
+
+    $default  reduce using rule 3 (camara_)
+
+
+state 113
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ . FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ . FLOAT_ MAYOR_
+
+    FLOAT_  shift, and go to state 120
+
+
+state 114
+
+   41 focal: FOCAL_ ABRELLAVE_ coordenadas coordenadas FACTOR_ FLOAT_ color CIERRALLAVE_ .
+
+    $default  reduce using rule 41 (focal)
+
+
+state 115
+
+   20 esfera: SPHERE_ ABRELLAVE_ coordenadas COMA_ FLOAT_ color CIERRALLAVE_ .
+
+    $default  reduce using rule 20 (esfera)
+
+
+state 116
+
+   23 checker: CHECKER_ ABRELLAVE_ color color . SIZE_ FLOAT_ CIERRALLAVE_
+
+    SIZE_  shift, and go to state 121
+
+
+state 117
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas coordenadas coordenadas coordenadas color . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 122
+
+
+state 118
+
+   21 triangulo: TRIANGLE_ ABRELLAVE_ coordenadas coordenadas coordenadas color CIERRALLAVE_ .
+
+    $default  reduce using rule 21 (triangulo)
+
+
+state 119
+
+    4 coordenadas: MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ .
+
+    $default  reduce using rule 4 (coordenadas)
+
+
+state 120
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ . MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ . MAYOR_
+
+    MAYOR_  shift, and go to state 123
+
+
+state 121
+
+   23 checker: CHECKER_ ABRELLAVE_ color color SIZE_ . FLOAT_ CIERRALLAVE_
+
+    FLOAT_  shift, and go to state 124
+
+
+state 122
+
+   22 cuadrado: QUADRILATERAL_ ABRELLAVE_ coordenadas coordenadas coordenadas coordenadas color CIERRALLAVE_ .
+
+    $default  reduce using rule 22 (cuadrado)
+
+
+state 123
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ . ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_
+    6      | COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ .
+
+    ESPECULAR_  shift, and go to state 125
+
+    $default  reduce using rule 6 (color)
+
+
+state 124
+
+   23 checker: CHECKER_ ABRELLAVE_ color color SIZE_ FLOAT_ . CIERRALLAVE_
+
+    CIERRALLAVE_  shift, and go to state 126
+
+
+state 125
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ . FLOAT_ DIFFUSE_ FLOAT_
+
+    FLOAT_  shift, and go to state 127
+
+
+state 126
+
+   23 checker: CHECKER_ ABRELLAVE_ color color SIZE_ FLOAT_ CIERRALLAVE_ .
+
+    $default  reduce using rule 23 (checker)
+
+
+state 127
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ . DIFFUSE_ FLOAT_
+
+    DIFFUSE_  shift, and go to state 128
+
+
+state 128
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ . FLOAT_
+
+    FLOAT_  shift, and go to state 129
+
+
+state 129
+
+    5 color: COLOR_ MENOR_ FLOAT_ COMA_ FLOAT_ COMA_ FLOAT_ MAYOR_ ESPECULAR_ FLOAT_ DIFFUSE_ FLOAT_ .
+
+    $default  reduce using rule 5 (color)
